@@ -15,13 +15,12 @@ The source code is openly developed and maintained, with a focus on reproducible
 ## Tutorials and examples
 
 Tutorials and example workflows are provided as Jupyter notebooks and are
-documented separately in the **LAMTA Examples** documentation.
-
-**Go to the LAMTA Examples documentation:**  https://lamta-examples.readthedocs.io/
+documented separately in the
+[**LAMTA Examples documentation**](https://lamta-examples.readthedocs.io/).
 
 The examples include:
 
-- Initialising and advecting particles in analytical flows  
+- Initialising and advecting particles in analytical flows
 - Working with `ParticleSet`
 - Configuring advection schemes and parameters
 - Handling periodic boundary conditions
