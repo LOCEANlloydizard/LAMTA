@@ -1,5 +1,6 @@
 sphinx>=7,<9
 pydata-sphinx-theme
+myst-parser
 
 numpy
 scipy
