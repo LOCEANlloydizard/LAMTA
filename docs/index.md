@@ -14,15 +14,18 @@ The source code is openly developed and maintained, with a focus on reproducible
 
 ## Tutorials and examples
 
-Tutorials are provided as a series of Jupyter notebooks to help users get started with LAMTA and explore its main functionalities:
+Tutorials and example workflows are provided as Jupyter notebooks and are
+documented separately in the **LAMTA Examples** documentation.
 
-- **Analytical_examples.ipynb** – Initialising and advecting particles in theoretical (analytical) flows
-- **ParticleSet.ipynb** – Initialising particles using the `ParticleSet` abstraction
-- **Advection.ipynb** – Configuring advection modes and numerical parameters
-- **Periodic_boundaries.ipynb** – Handling periodic boundary conditions
-- **Ocean_examples.ipynb** – Applications to realistic ocean current fields
+**Go to the LAMTA Examples documentation:**  https://lamta-examples.readthedocs.io/
 
-These notebooks are intended both as tutorials and as practical examples for adapting LAMTA to new datasets.
+The examples include:
+
+- Initialising and advecting particles in analytical flows  
+- Working with `ParticleSet`
+- Configuring advection schemes and parameters
+- Handling periodic boundary conditions
+- Applying LAMTA to realistic ocean current fields
 
 ---
 
