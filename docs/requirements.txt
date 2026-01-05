@@ -1,0 +1,7 @@
+sphinx>=7,<9
+pydata-sphinx-theme
+
+numpy
+scipy
+xarray
+netcdf4
