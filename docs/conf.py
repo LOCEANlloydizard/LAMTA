@@ -10,6 +10,8 @@ source_suffix = {
     ".md": "markdown",
 }
 
-root_doc = "index"
+root_doc = "docs/index"
 
 html_theme = "pydata_sphinx_theme"
+
+exclude_patterns = ["_build"]
