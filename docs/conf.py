@@ -10,7 +10,7 @@ source_suffix = {
     ".md": "markdown",
 }
 
-root_doc = "docs/index"
+root_doc = "index"
 
 html_theme = "pydata_sphinx_theme"
 
