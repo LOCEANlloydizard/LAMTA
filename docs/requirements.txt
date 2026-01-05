@@ -4,4 +4,4 @@ pydata-sphinx-theme
 numpy
 scipy
 xarray
-netcdf4
+netCDF4<1.7.4
