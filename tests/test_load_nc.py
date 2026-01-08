@@ -29,7 +29,12 @@ def test_loadSWOTL3uv_smoke_linear_interp(monkeypatch):
     # Arrange
     day = "20240101"
     rep = "/fake/rep"
-    varn = {"longitude": "lon", "latitude": "lat", "u": "u", "v": "v"}  # only used for CMEMS path
+    varn = {
+        "longitude": "lon",
+        "latitude": "lat",
+        "u": "u",
+        "v": "v",
+    }  # only used for CMEMS path
     area = [1.5, 37.5, 6.5, 43.5]  # [lonmin, latmin, lonmax, latmax]
 
     fake_ds = _fake_swot_dataset()
@@ -42,6 +47,7 @@ def test_loadSWOTL3uv_smoke_linear_interp(monkeypatch):
         return fake_ds
 
     import glob as _glob
+
     monkeypatch.setattr(_glob, "glob", fake_glob)
     monkeypatch.setattr(xr, "open_dataset", fake_open_dataset)
 
@@ -80,7 +86,10 @@ def test_loadSWOTL3uv_unit_deg_per_day(monkeypatch):
     fake_ds = _fake_swot_dataset()
 
     import glob as _glob
-    monkeypatch.setattr(_glob, "glob", lambda pattern: [f"{rep}/anything_{day}_whatever.nc"])
+
+    monkeypatch.setattr(
+        _glob, "glob", lambda pattern: [f"{rep}/anything_{day}_whatever.nc"]
+    )
     monkeypatch.setattr(xr, "open_dataset", lambda path: fake_ds)
 
     field = loadSWOTL3uv([day], rep=rep, varn=varn, unit="deg/d", area=area)

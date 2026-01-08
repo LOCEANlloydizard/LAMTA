@@ -24,11 +24,11 @@ are documented separately.
 
 The examples cover topics such as:
 
-- Initialising and advecting particles in analytical flows  
-- Working with `ParticleSet`  
-- Configuring advection schemes and parameters  
-- Handling periodic boundary conditions  
-- Applying LAMTA to realistic ocean current fields  
+- Initialising and advecting particles in analytical flows
+- Working with `ParticleSet`
+- Configuring advection schemes and parameters
+- Handling periodic boundary conditions
+- Applying LAMTA to realistic ocean current fields
 
 ---
 
@@ -44,7 +44,7 @@ detail.
 
 The development of LAMTA has been supported by the following organisations:
 
-- **LOCEAN** — *Laboratoire d’Océanographie et du Climat: Expérimentations et Approches Numériques*, Sorbonne University  
+- **LOCEAN** — *Laboratoire d’Océanographie et du Climat: Expérimentations et Approches Numériques*, Sorbonne University
 - **CNES** — *Centre National d’Études Spatiales*
 
 ---
@@ -54,6 +54,6 @@ The development of LAMTA has been supported by the following organisations:
 The development of LAMTA has benefited from the remarkable coding efforts and
 scientific contributions of:
 
-- Louise Rousselet  
-- Francesco d’Ovidio  
+- Louise Rousselet
+- Francesco d’Ovidio
 - Gina Fifani
