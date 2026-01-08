@@ -93,12 +93,7 @@ def loadSWOTL3uv(all_days, rep, varn, unit=None, **kwargs):
         if "area" in kwargs:
             area = kwargs["area"]
             # crop data
-            selection = (
-                (ds.longitude > area[0])
-                & (ds.longitude < area[2])
-                & (ds.latitude > area[1])
-                & (ds.latitude < area[3])
-            )
+            selection = (ds.longitude > area[0]) & (ds.longitude < area[2]) & (ds.latitude > area[1]) & (ds.latitude < area[3])
             ds = ds.where(selection)
 
         # crop area if masked
@@ -116,12 +111,8 @@ def loadSWOTL3uv(all_days, rep, varn, unit=None, **kwargs):
         xx = np.linspace(area[0], area[2], 500)
         yy = np.linspace(area[1], area[3], 500)
         xv, yv = np.meshgrid(xx, yy)
-        u2 = griddata(
-            (lons.flatten(), lats.flatten()), us.flatten(), (xv, yv), method="linear"
-        )
-        v2 = griddata(
-            (lons.flatten(), lats.flatten()), vs.flatten(), (xv, yv), method="linear"
-        )
+        u2 = griddata((lons.flatten(), lats.flatten()), us.flatten(), (xv, yv), method="linear")
+        v2 = griddata((lons.flatten(), lats.flatten()), vs.flatten(), (xv, yv), method="linear")
 
         date.append(dt.date.toordinal(dt.datetime.strptime(dayv, "%Y%m%d")))
 
@@ -246,12 +237,8 @@ def loadDUACSuv(all_days, filei, varn, unit=None):
 
         [Y, X] = np.meshgrid(lat, lon)
         if unit == "deg/d":
-            u_dd = (
-                (u / (RT * np.cos(Y / 180 * np.pi)) * 180 / np.pi) * 24 * 60 * 60
-            )  ## convert from m/s to degree/day
-            v_dd = (
-                (v * 180 / np.pi / RT) * 24 * 60 * 60
-            )  ## convert from m/s to degree/day
+            u_dd = (u / (RT * np.cos(Y / 180 * np.pi)) * 180 / np.pi) * 24 * 60 * 60  ## convert from m/s to degree/day
+            v_dd = (v * 180 / np.pi / RT) * 24 * 60 * 60  ## convert from m/s to degree/day
         elif unit == "cm/s":
             u_dd = u * 1e2
             v_dd = v * 1e2
@@ -295,12 +282,8 @@ def loadAISuv(all_days, filei, varn, unit=None):
         [Y, X] = np.meshgrid(lat, lon)
         # [X,Y] = np.meshgrid(lon,lat)
         if unit == "deg/d":
-            u_dd = (
-                (u / (RT * np.cos(Y / 180 * np.pi)) * 180 / np.pi) * 24 * 60 * 60
-            )  ## convert from m/s to degree/day
-            v_dd = (
-                (v * 180 / np.pi / RT) * 24 * 60 * 60
-            )  ## convert from m/s to degree/day
+            u_dd = (u / (RT * np.cos(Y / 180 * np.pi)) * 180 / np.pi) * 24 * 60 * 60  ## convert from m/s to degree/day
+            v_dd = (v * 180 / np.pi / RT) * 24 * 60 * 60  ## convert from m/s to degree/day
         elif unit == "cm/s":
             u_dd = u * 1e2
             v_dd = v * 1e2
@@ -348,12 +331,8 @@ def loadAISuv_SWOTmask(all_days, filei, varn, unit=None, grey_layer=None):
         [Y, X] = np.meshgrid(lat, lon)
         # [X,Y] = np.meshgrid(lon,lat)
         if unit == "deg/d":
-            u_dd = (
-                (u / (RT * np.cos(Y / 180 * np.pi)) * 180 / np.pi) * 24 * 60 * 60
-            )  ## convert from m/s to degree/day
-            v_dd = (
-                (v * 180 / np.pi / RT) * 24 * 60 * 60
-            )  ## convert from m/s to degree/day
+            u_dd = (u / (RT * np.cos(Y / 180 * np.pi)) * 180 / np.pi) * 24 * 60 * 60  ## convert from m/s to degree/day
+            v_dd = (v * 180 / np.pi / RT) * 24 * 60 * 60  ## convert from m/s to degree/day
         elif unit == "cm/s":
             u_dd = u * 1e2
             v_dd = v * 1e2
@@ -372,9 +351,7 @@ def loadAISuv_SWOTmask(all_days, filei, varn, unit=None, grey_layer=None):
     grey_layer_for_mask = grey_layer.T
     factor_x = u_all.shape[1] / grey_layer_for_mask.shape[0]
     factor_y = u_all.shape[2] / grey_layer_for_mask.shape[1]
-    grey_layer_resized = zoom(
-        grey_layer_for_mask, (factor_x, factor_y), order=0
-    )  # shape (x, y)
+    grey_layer_resized = zoom(grey_layer_for_mask, (factor_x, factor_y), order=0)  # shape (x, y)
 
     # Broadcasting sur l'axe temps : grey_layer_resized[None, :, :]
     u_all_masked = np.where(np.isnan(grey_layer_resized[None, :, :]), np.nan, u_all)
@@ -426,12 +403,7 @@ def loadsstCLS(fname, rep):
 def loadsstSEN(fname, rep, area):
     filei = glob.glob(rep + fname)[0]
     file = xr.open_dataset(filei)
-    selection = (
-        (file.lon > area[0])
-        & (file.lon < area[2])
-        & (file.lat > area[1])
-        & (file.lat < area[3])
-    )
+    selection = (file.lon > area[0]) & (file.lon < area[2]) & (file.lat > area[1]) & (file.lat < area[3])
     file = file.where(selection, drop=True)
     lons = file.lon.values.ravel()
     lats = file.lat.values.ravel()
@@ -467,20 +439,12 @@ def loadbathy(fname, repb, **kwargs):
         rlon = kwargs["rlon"]
         if all(num > 180 for num in rlon):
             rlon = [x - 360 for x in rlon]
-        indx = [
-            index
-            for index, item in enumerate(lon)
-            if (item >= rlon[0] and item <= rlon[1])
-        ]
+        indx = [index for index, item in enumerate(lon) if (item >= rlon[0] and item <= rlon[1])]
     else:
         indx = range(0, len(lon))
     if "rlat" in kwargs:
         rlat = kwargs["rlat"]
-        indy = [
-            index
-            for index, item in enumerate(lat)
-            if (item >= rlat[0] and item <= rlat[1])
-        ]
+        indy = [index for index, item in enumerate(lat) if (item >= rlat[0] and item <= rlat[1])]
     else:
         indy = range(0, len(lat))
 

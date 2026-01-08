@@ -86,9 +86,7 @@ def test_loadSWOTL3uv_unit_deg_per_day(monkeypatch):
 
     import glob as _glob
 
-    monkeypatch.setattr(
-        _glob, "glob", lambda pattern: [f"{rep}/anything_{day}_whatever.nc"]
-    )
+    monkeypatch.setattr(_glob, "glob", lambda pattern: [f"{rep}/anything_{day}_whatever.nc"])
     monkeypatch.setattr(xr, "open_dataset", lambda path: fake_ds)
 
     field = loadSWOTL3uv([day], rep=rep, varn=varn, unit="deg/d", area=area)

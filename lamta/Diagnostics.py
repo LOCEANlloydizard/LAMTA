@@ -12,7 +12,8 @@ import glob
 
 class Lagrangian:
     def diag(self, diag=None, method=None, f=None, **kwargs):
-        """Initialize and launch the diagnostics requested and method set to advect the Lagrangian particles previsouly set by ParticleSet
+        """Initialize and launch the diagnostics requested and method set to
+        advect the Lagrangian particles previsouly set by ParticleSet
 
         :param diag: list of the requested Lagrangian diagnostics.
         diag = ['FTLE'] or ['LLADV'].
@@ -43,9 +44,7 @@ class Lagrangian:
         elif method == "rk4flat":
             trjf = self.rk4flat(f, Nstep, **kwargs)
         else:
-            warntxt = (
-                "Warning: 'method' is not defined -> using default value (rk4flat)"
-            )
+            warntxt = "Warning: 'method' is not defined -> using default value (rk4flat)"
             warnings.warn(warntxt)
             if "Library" in sys.modules.keys():
                 Library.Logfile(warntxt)
@@ -130,12 +129,8 @@ class Lagrangian:
                 lon, lat = self.lons[:, 0], self.lats[0, :]
             else:
                 lon, lat = self.lons, self.lats
-            us_in = interpn(
-                (lon, lat), self.us, new_grid, bounds_error=False, fill_value=np.nan
-            )
-            vs_in = interpn(
-                (lon, lat), self.vs, new_grid, bounds_error=False, fill_value=np.nan
-            )
+            us_in = interpn((lon, lat), self.us, new_grid, bounds_error=False, fill_value=np.nan)
+            vs_in = interpn((lon, lat), self.vs, new_grid, bounds_error=False, fill_value=np.nan)
         elif udim.ndim == 3 and udim.ndim == 3:
             if "coordinates" in kwargs and kwargs["coordinates"] == "spherical":
                 xn, yn = Lagrangian.backonsphere(self, x, y)
@@ -227,12 +222,8 @@ class Lagrangian:
             U = U[:, iuniq]
             V = V[:, iuniq]
 
-            u_in = interpn(
-                (lon, lat), U, new_grid, bounds_error=False, fill_value=np.nan
-            )
-            v_in = interpn(
-                (lon, lat), V, new_grid, bounds_error=False, fill_value=np.nan
-            )
+            u_in = interpn((lon, lat), U, new_grid, bounds_error=False, fill_value=np.nan)
+            v_in = interpn((lon, lat), V, new_grid, bounds_error=False, fill_value=np.nan)
 
         # -------------------------
         # 3D velocity field (time, lon, lat)
@@ -274,9 +265,7 @@ class Lagrangian:
         var = np.asarray(var)
 
         if lon.ndim != 1 or lat.ndim != 1 or var.ndim != 2:
-            raise ValueError(
-                "interp2d_pairs expects lon, lat as 1D arrays and var as a 2D array."
-            )
+            raise ValueError("interp2d_pairs expects lon, lat as 1D arrays and var as a 2D array.")
 
         # Handle var orientation (accept either (nlat,nlon) or (nlon,nlat))
         if var.shape == (lon.size, lat.size):
@@ -312,21 +301,15 @@ class Lagrangian:
         return f
 
     def rk1flatstep(self, t, x, y, f, h):
-        xp, yp = f(
-            self, t, x, y
-        )  # with mathematical formalism, this is d(pts)/dt, or pts', that is, ptsp
+        xp, yp = f(self, t, x, y)  # with mathematical formalism, this is d(pts)/dt, or pts', that is, ptsp
         x_n = x + xp * h
         y_n = y + yp * h
         return x_n, y_n
 
     def rk4flatstep(self, t, x, y, f, h, **kwargs):
         k1 = h * np.asarray(f(self, t, x, y, **kwargs))
-        k2 = h * np.asarray(
-            f(self, (t + h / 2), (x + k1[0] / 2), (y + k1[1] / 2), **kwargs)
-        )
-        k3 = h * np.asarray(
-            f(self, (t + h / 2), (x + k2[0] / 2), (y + k2[1] / 2), **kwargs)
-        )
+        k2 = h * np.asarray(f(self, (t + h / 2), (x + k1[0] / 2), (y + k1[1] / 2), **kwargs))
+        k3 = h * np.asarray(f(self, (t + h / 2), (x + k2[0] / 2), (y + k2[1] / 2), **kwargs))
         k4 = h * np.asarray(f(self, (t + h), (x + k3[0]), (y + k3[1]), **kwargs))
         k = (k1 + 2 * k2 + 2 * k3 + k4) / 6
         x_n = x + k[0]
@@ -427,7 +410,8 @@ class Lagrangian:
         """Compute Lon/Lat advections
         :param trj: particle trajectories from advection (returned from 'method')
 
-        :output lladv: lons/lats are longitudes and latitudes for mapping; lonf_map and latf_map are longitude and latitude advections respectively formatted for mapping.
+        :output lladv: lons/lats are longitudes and latitudes for mapping; lonf_map and latf_map are
+        longitude and latitude advections respectively formatted for mapping.
         """
         if "Library" in sys.modules.keys():
             Library.tic()
@@ -465,14 +449,10 @@ class Lagrangian:
         if "output" in kwargs and kwargs["output"] == "netcdf":
             if "GlobalVars" in sys.modules.keys():
                 prod = kwargs["product"]
-                date = dt.datetime.strftime(
-                    dt.datetime.strptime(dayv, "%Y-%m-%d"), "%Y%m%d"
-                )
+                date = dt.datetime.strftime(dt.datetime.strptime(dayv, "%Y-%m-%d"), "%Y%m%d")
                 fname = GlobalVars.Dir["dir_wrk"] + date + "_" + prod + "_LLADV.nc"
                 title = prod + "LON/LAT ADVECTION " + date
-                Fields.LLADV(fname).createnc(
-                    lons, lats, lonf_map, title, vvar2=latf_map
-                )
+                Fields.LLADV(fname).createnc(lons, lats, lonf_map, title, vvar2=latf_map)
             else:
                 warnings.warn("Warning: Use Save.py to save your data")
 
@@ -482,7 +462,9 @@ class Lagrangian:
         """Compute SST advection from lon/lat advection
         :param lladv: lon/lat advection (returned from 'LLADV')
 
-        :output sstadv: lons/lats are longitudes and latitudes for mapping; lonf_map and latf_map are longitude and latitude advections respectively formatted for mapping.
+        :output sstadv: lons/lats are longitudes and latitudes for mapping;
+        lonf_map and latf_map are longitude and latitude advections respectively
+        formatted for mapping.
         """
         trjx = trjf["trjx"]
         trjy = trjf["trjy"]
@@ -509,9 +491,7 @@ class Lagrangian:
                 day = GlobalVars.Lag["sstadvd"]
             else:
                 day = 3
-                warnings.warn(
-                    "Warning: 'daysst' is not defined -> using default value (3)"
-                )
+                warnings.warn("Warning: 'daysst' is not defined -> using default value (3)")
 
         iday = (day * kwargs["numstep"]) + 1
         [Xs, Ys] = np.meshgrid(lons0, lats)
@@ -537,9 +517,7 @@ class Lagrangian:
             lat = np.asarray(field["lat"])
             var = np.asarray(field["sst"])
         elif "GlobalVars" in sys.modules.keys():
-            nprod = GlobalVars.config.get(
-                "products", GlobalVars.Lag["sstprod"] + "prod"
-            )
+            nprod = GlobalVars.config.get("products", GlobalVars.Lag["sstprod"] + "prod")
             fname = glob.glob(GlobalVars.Dir["dir_wrk"] + "/*" + nprod + "*.nc")
             if fname:
                 field = eval("Fields." + nprod + "(fname[0]).loadnc()")
@@ -592,9 +570,7 @@ class Lagrangian:
         if "output" in kwargs and kwargs["output"] == "netcdf":
             if "GlobalVars" in sys.modules.keys():
                 prod = kwargs["product"]
-                date = dt.datetime.strftime(
-                    dt.datetime.strptime(dayv, "%Y-%m-%d"), "%Y%m%d"
-                )
+                date = dt.datetime.strftime(dt.datetime.strptime(dayv, "%Y-%m-%d"), "%Y%m%d")
                 fname = GlobalVars.Dir["dir_wrk"] + date + "_" + prod + "_SSTADV.nc"
                 title = prod + "SST ADVECTION " + date
                 Fields.SSTADV(fname).createnc(lons, lats, sst_map, title)
@@ -657,9 +633,7 @@ class Lagrangian:
         if "output" in kwargs and kwargs["output"] == "netcdf":
             if "GlobalVars" in sys.modules.keys():
                 prod = kwargs["product"]
-                date = dt.datetime.strftime(
-                    dt.datetime.strptime(dayv, "%Y-%m-%d"), "%Y%m%d"
-                )
+                date = dt.datetime.strftime(dt.datetime.strptime(dayv, "%Y-%m-%d"), "%Y%m%d")
                 fname = GlobalVars.Dir["dir_wrk"] + date + "_" + prod + "_FTLE.nc"
                 title = prod + "FTLE " + date
                 Fields.FTLE(fname).createnc(lons, lats, ftle_lyap, title)
@@ -705,9 +679,7 @@ class Lagrangian:
                 day = GlobalVars.Lag["dayd"]
             else:
                 day = 2
-                warnings.warn(
-                    "Warning: 'dayd' is not defined -> using default value (2 days)"
-                )
+                warnings.warn("Warning: 'dayd' is not defined -> using default value (2 days)")
         iday = (kwargs["numstep"]) + 1
         print(trjf["trjt"][iday])
         [Xs, Ys] = np.meshgrid(lons0, lats)
@@ -844,9 +816,7 @@ class Lagrangian:
         if "output" in kwargs and kwargs["output"] == "netcdf":
             if "GlobalVars" in sys.modules.keys():
                 prod = kwargs["product"]
-                date = dt.datetime.strftime(
-                    dt.datetime.strptime(dayv, "%Y-%m-%d"), "%Y%m%d"
-                )
+                date = dt.datetime.strftime(dt.datetime.strptime(dayv, "%Y-%m-%d"), "%Y%m%d")
                 fname = GlobalVars.Dir["dir_wrk"] + date + "_" + prod + "_OWTRAJ.nc"
                 title = prod + "OWTRAJ " + date
                 Fields.OWTRAJ(fname).createnc(lons, lats, owd, title)
@@ -890,9 +860,7 @@ class Lagrangian:
             trjy = trjy[1 :: GlobalVars.Lag["numstep"]]
             bathylvl = GlobalVars.Lag["bathylvl"]
             file = GlobalVars.Dir["dir_bathy"] + GlobalVars.Lag["bathyfile"]
-            field = Fields.ETOPO.loadnc(
-                file, rlon=GlobalVars.Lag["loni"], rlat=GlobalVars.Lag["lati"]
-            )
+            field = Fields.ETOPO.loadnc(file, rlon=GlobalVars.Lag["loni"], rlat=GlobalVars.Lag["lati"])
             lon = np.asarray(field["lon"])
             lat = np.asarray(field["lat"])
             z = np.asarray(field["z"])
@@ -900,12 +868,7 @@ class Lagrangian:
             print("Missing bathymetry field: bathyfield = field", file=sys.stderr)
             lon, lat, z = None, None, None
 
-        if (
-            (lon is not None)
-            and (np.size(lon) > 0)
-            and (np.nanmin(lon) < 0)
-            and (np.nanmin(trjx) > 0)
-        ):
+        if (lon is not None) and (np.size(lon) > 0) and (np.nanmin(lon) < 0) and (np.nanmin(trjx) > 0):
             lon = lon.copy()
             lon[lon < 0] += 360
 
@@ -1001,27 +964,15 @@ class ParticleSet(Lagrangian):
             self.PeriodicBC = kwargs["PeriodicBC"]
             if self.PeriodicBC == True:
                 dlon = np.array(np.diff(self.lon))
-                self.lon = np.hstack(
-                    [self.lon[0] - dlon[0] / 2, self.lon, self.lon[-1] + dlon[-1] / 2]
-                )
+                self.lon = np.hstack([self.lon[0] - dlon[0] / 2, self.lon, self.lon[-1] + dlon[-1] / 2])
                 if self.u.ndim == 2 and self.u.ndim == 2:
                     self.u = np.vstack([self.u[0, :], self.u, self.u[-1, :]])
                     self.v = np.vstack([self.v[0, :], self.v, self.v[-1, :]])
-                    self.u_nonan = np.vstack(
-                        [self.u_nonan[0, :], self.u_nonan, self.u_nonan[-1, :]]
-                    )
-                    self.v_nonan = np.vstack(
-                        [self.v_nonan[0, :], self.v_nonan, self.v_nonan[-1, :]]
-                    )
+                    self.u_nonan = np.vstack([self.u_nonan[0, :], self.u_nonan, self.u_nonan[-1, :]])
+                    self.v_nonan = np.vstack([self.v_nonan[0, :], self.v_nonan, self.v_nonan[-1, :]])
                 elif self.u.ndim == 3 and self.v.ndim == 3:
-                    self.u = [
-                        np.vstack([self.u[i, 0, :], self.u[i, :, :], self.u[i, -1, :]])
-                        for i in range(self.u.shape[0])
-                    ]
-                    self.v = [
-                        np.vstack([self.v[i, 0, :], self.v[i, :, :], self.v[i, -1, :]])
-                        for i in range(self.v.shape[0])
-                    ]
+                    self.u = [np.vstack([self.u[i, 0, :], self.u[i, :, :], self.u[i, -1, :]]) for i in range(self.u.shape[0])]
+                    self.v = [np.vstack([self.v[i, 0, :], self.v[i, :, :], self.v[i, -1, :]]) for i in range(self.v.shape[0])]
                     self.u_nonan = [
                         np.vstack(
                             [
@@ -1144,9 +1095,7 @@ class ParticleSet(Lagrangian):
             else:
                 dr = 10
                 warnings.warn("Default number of circles = 10.")
-            rads = np.linspace(
-                0.1, rad, dr
-            )  # start with 0.1 otherwise 0 is on the center point
+            rads = np.linspace(0.1, rad, dr)  # start with 0.1 otherwise 0 is on the center point
             x, y = [], []
             for rr in rads:
                 if "npoints" in kwargs:
@@ -1226,10 +1175,7 @@ class ParticleSet(Lagrangian):
                 self.lon, self.lat = self.lon[0, :, 0], self.lat[0, 0, :]
                 if np.all(np.diff(self.lon)) == 0 and np.all(np.diff(self.lat)) == 0:
                     self.lon, self.lat = self.lon[:, 0, 0], self.lat[0, :, 0]
-                    if (
-                        np.all(np.diff(self.lon)) == 0
-                        and np.all(np.diff(self.lat)) == 0
-                    ):
+                    if np.all(np.diff(self.lon)) == 0 and np.all(np.diff(self.lat)) == 0:
                         self.lon, self.lat = self.lon[0, 0, :], self.lat[:, 0, 0]
         # check if longitudes are in -180;180 grid
         if "xy" in kwargs and kwargs["xy"] == "xy":
@@ -1301,9 +1247,7 @@ class Eulerian:
             lat0 = lat0[iy]
             field2d = field2d[iy, :]
 
-        rgi = RegularGridInterpolator(
-            (lat0, lon0), field2d, method=method, bounds_error=False, fill_value=np.nan
-        )
+        rgi = RegularGridInterpolator((lat0, lon0), field2d, method=method, bounds_error=False, fill_value=np.nan)
 
         Lon, Lat = np.meshgrid(lon_new, lat_new)  # (nlat_new, nlon_new)
         pts = np.column_stack([Lat.ravel(), Lon.ravel()])
@@ -1326,9 +1270,7 @@ class Eulerian:
             U = self.u
             V = self.v
         elif self.u.ndim == 3:
-            day = dt.datetime.toordinal(
-                dt.datetime.strptime(self.dayv, "%Y-%m-%d").date()
-            )
+            day = dt.datetime.toordinal(dt.datetime.strptime(self.dayv, "%Y-%m-%d").date())
             idd = np.where(self.dates == day)
             U = np.squeeze(self.u[idd, :, :])
             V = np.squeeze(self.v[idd, :, :])
@@ -1369,9 +1311,7 @@ class Eulerian:
             U = self.u
             V = self.v
         elif self.u.ndim == 3:
-            day = dt.datetime.toordinal(
-                dt.datetime.strptime(self.dayv, "%Y-%m-%d").date()
-            )
+            day = dt.datetime.toordinal(dt.datetime.strptime(self.dayv, "%Y-%m-%d").date())
             idd = np.where(self.dates == day)
             U = np.squeeze(self.u[idd, :, :])
             V = np.squeeze(self.v[idd, :, :])

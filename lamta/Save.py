@@ -1,6 +1,7 @@
 import numpy as np
 from netCDF4 import Dataset
 
+
 class Create:
     @classmethod
     def netcdf(cls, fname, lon, lat, vvar, title, var_name, var_units, **kwargs):
@@ -19,15 +20,11 @@ class Create:
         var.units = var_units
         var[:, :, :] = vvar
         if "var2" in kwargs:
-            var2 = file.createVariable(
-                kwargs["var2_name"], np.float32, ("time", "lat", "lon")
-            )
+            var2 = file.createVariable(kwargs["var2_name"], np.float32, ("time", "lat", "lon"))
             var2.units = kwargs["var2_units"]
             var2[:, :, :] = kwargs["var2"]
         if "var3" in kwargs:
-            var3 = file.createVariable(
-                kwargs["var3_name"], np.float32, ("time", "lat", "lon")
-            )
+            var3 = file.createVariable(kwargs["var3_name"], np.float32, ("time", "lat", "lon"))
             var3.units = kwargs["var3_units"]
             var3[:, :, :] = kwargs["var3"]
         file.close()
