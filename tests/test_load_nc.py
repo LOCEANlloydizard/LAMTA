@@ -1,6 +1,5 @@
 import numpy as np
 import xarray as xr
-import pytest
 
 from lamta.Load_nc import loadSWOTL3uv
 
