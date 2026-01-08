@@ -30,7 +30,7 @@ def test_loadSWOTL3uv_smoke_linear_interp(monkeypatch):
     day = "20240101"
     rep = "/fake/rep"
     varn = {"longitude": "lon", "latitude": "lat", "u": "u", "v": "v"}  # only used for CMEMS path
-    area = [2.5, 38.5, 5.5, 42.5]  # [lonmin, latmin, lonmax, latmax]
+    area = [1.5, 37.5, 6.5, 43.5]  # [lonmin, latmin, lonmax, latmax]
 
     fake_ds = _fake_swot_dataset()
 
