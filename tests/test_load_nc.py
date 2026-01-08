@@ -75,7 +75,7 @@ def test_loadSWOTL3uv_unit_deg_per_day(monkeypatch):
     day = "20240101"
     rep = "/fake/rep"
     varn = {"longitude": "lon", "latitude": "lat", "u": "u", "v": "v"}
-    area = [2.5, 38.5, 5.5, 42.5]
+    area = [1.5, 37.5, 6.5, 43.5]
 
     fake_ds = _fake_swot_dataset()
 
