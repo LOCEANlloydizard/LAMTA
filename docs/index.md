@@ -1,6 +1,9 @@
 # LAMTA
 
-**LAMTA** (*LAgrangian Manifolds Tracking Algorithm*) is a Python code designed to compute numerical particle trajectories within ocean current 2‑D fields and to derive a range of Lagrangian diagnostics for detecting and tracking (sub)mesoscale ocean features.
+[![SPASSOv2.0 paper](https://img.shields.io/badge/SPASSOv2.0-paper-blue)](https://doi.org/10.1175/JTECH-D-24-0071.1)
+[![SPEC 0 — Minimum Supported Dependencies](https://img.shields.io/badge/SPEC-0-green?labelColor=%23004811&color=%235CA038)](https://scientific-python.org/specs/spec-0000/)
+
+**LAMTA** (**LA**grangian **M**anifolds **T**racking **A**lgorithm) is a Python code designed to compute numerical particle trajectories within ocean current 2-D fields and to derive a range of Lagrangian diagnostics for detecting and tracking (sub)mesoscale ocean features.
 
 ---
 
@@ -10,22 +13,28 @@ A dedicated manuscript is currently under development to describe the theoretica
 
 The source code is openly developed and maintained, with a focus on reproducible Lagrangian analyses in oceanography.
 
+LAMTA is also described in the context of SPASSOv2.0 in:
+
+Rousselet, L., d’Ovidio, F., Izard, L., Della Penna, A., Petrenko, A., Barrillon, S.,
+Nencioli, F., & Doglioli, A. (2025). *A Software Package for an Adaptive
+Satellite-Based Sampling for Oceanographic Cruises (SPASSOv2.0): Tracking
+Fine-Scale Features for Physical and Biogeochemical Studies*. Journal of
+Atmospheric and Oceanic Technology, 42(8), 979–990.
+https://doi.org/10.1175/JTECH-D-24-0071.1
+
 ---
 
 ## Using LAMTA with the examples
 
-Tutorials and example workflows are provided as Jupyter notebooks and are
-documented separately in the
-[**LAMTA Examples documentation**](https://lamta-examples.readthedocs.io/).
+Tutorials and example workflows are provided as Jupyter notebooks and are documented separately in the [**LAMTA Examples documentation**](https://lamta-examples.readthedocs.io/).
 
-These examples are designed to run against a local installation of LAMTA and are not a standalone package.s
-To run the tutorials make sure that:
+These examples are designed to run against a local installation of LAMTA and are not a standalone package. To run the tutorials make sure that:
 
 - LAMTA is installed in the same Python environment (preferably in editable mode)
+
 - that environment is selected as the active Python kernel (Jupyter, VS Code, etc.)
 
-This setup ensures that the examples always run against your local version of LAMTA.
-The examples include:
+This setup ensures that the examples always run against your local version of LAMTA. The examples include:
 
 - Initialising and advecting particles in analytical flows
 - Working with `ParticleSet`
@@ -79,18 +88,19 @@ We recommend using Visual Studio Code and opening the parent folder (e.g. `lamta
 - [VS Code workspaces](https://code.visualstudio.com/docs/editor/multi-root-workspaces)
 
 
-### Step 1 — Clone the repository
+### Step 1 — Clone the repositories
 
 ```{warning}
-If you only want to run the notebooks, cloning the repository is sufficient.
-If you plan to contribute to the code or documentation, we recommend forking the repository first and cloning your fork instead.
+If you plan to contribute to the code or documentation, we recommend forking the corresponding repository first and cloning your fork instead.
 ```
 
 ```bash
 # Users
+git clone https://github.com/OceanCruises/LAMTA
 git clone https://github.com/OceanCruises/LAMTA_examples
 
 # Contributors
+# git clone https://github.com/<your-username>/LAMTA
 # git clone https://github.com/<your-username>/LAMTA_examples
 
 cd LAMTA

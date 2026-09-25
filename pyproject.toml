@@ -1,3 +1,54 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lamta"
+version = "0.0.0"
+description = "LAgrangian Manifolds Tracking Algorithm"
+readme = "README.md"
+requires-python = ">=3.12"
+license = "GPL-3.0-only"
+authors = [
+    { name = "OceanCruises" },
+]
+dependencies = [
+    "numpy>=2.2",
+    "scipy>=1.15",
+    "xarray>=2024.10.0",
+    "netCDF4>=1.7.2,<1.7.4",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pytest-cov",
+]
+
+docs = [
+    "sphinx>=7,<9",
+    "pydata-sphinx-theme",
+    "myst-parser",
+]
+
+dev = [
+    "pre-commit",
+    "pytest",
+    "pytest-cov",
+    "sphinx>=7,<9",
+    "pydata-sphinx-theme",
+    "myst-parser",
+]
+
+[project.urls]
+Documentation = "https://lamta.readthedocs.io/"
+Examples = "https://github.com/OceanCruises/LAMTA_examples"
+Repository = "https://github.com/OceanCruises/LAMTA"
+"SPASSOv2.0 paper" = "https://doi.org/10.1175/JTECH-D-24-0071.1"
+
+[tool.setuptools.packages.find]
+include = ["lamta*"]
+
 [tool.ruff]
 line-length = 130
 
