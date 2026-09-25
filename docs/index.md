@@ -13,14 +13,10 @@ A dedicated manuscript is currently under development to describe the theoretica
 
 The source code is openly developed and maintained, with a focus on reproducible Lagrangian analyses in oceanography.
 
-LAMTA is also described in the context of SPASSOv2.0 in:
+LAMTA and its Lagrangian diagnostics are also described in the context of SPASSOv2.0 in:
 
-Rousselet, L., d’Ovidio, F., Izard, L., Della Penna, A., Petrenko, A., Barrillon, S.,
-Nencioli, F., & Doglioli, A. (2025). *A Software Package for an Adaptive
-Satellite-Based Sampling for Oceanographic Cruises (SPASSOv2.0): Tracking
-Fine-Scale Features for Physical and Biogeochemical Studies*. Journal of
-Atmospheric and Oceanic Technology, 42(8), 979–990.
-https://doi.org/10.1175/JTECH-D-24-0071.1
+Rousselet, L., d’Ovidio, F., Izard, L., Della Penna, A., Petrenko, A., Barrillon, S., Nencioli, F., and Doglioli, A. (2025).
+*A Software Package for an Adaptive Satellite-Based Sampling for Oceanographic Cruises (SPASSOv2.0): Tracking Fine-Scale Features for Physical and Biogeochemical Studies*. *Journal of Atmospheric and Oceanic Technology*, **42**(8), 979–990. https://doi.org/10.1175/JTECH-D-24-0071.1
 
 ---
 
